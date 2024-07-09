@@ -5,12 +5,15 @@ const Home = () => {
 //let nuevoTodo = "";
 const [nuevoTodo, setNuevoTodo] = useState("")
 
-const [todos, setTodos] = useState([""]);
+const [todos, setTodos] = useState([]);
 
-const handleClick = () => {
-	console.log(nuevoTodo)
-	setTodos([...todos, nuevoTodo])
-}
+
+const onkeydown = (event) => {
+	if (event.key === "Enter") {
+		setTodos([...todos, nuevoTodo])
+	setNuevoTodo("")}
+	
+};
 
 const deleteTodo = (indice) => {
 	const listaNueva = todos.filter((todo, i) => i !== indice)
@@ -22,24 +25,30 @@ const handleChange = (event) => {
 }
 
 
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">To do list</h1>
-			<div className="input-group mb-3" >
-  				<input type="text" class="form-control" aria-label="To do" aria-describedby="button-addon2" onChange={handleChange} />
-  				<button onClick={handleClick} className="btn btn-light" type="button" id="button-addon2">Button</button>
-			</div>
-				<ul className="list-group">
-				{todos.map((todo, indice) => {
-					return(
-						<li className="list-group-item">
-							{todo} <button onClick={() => deleteTodo(indice)} type="button" className="btn-close" aria-label="Close"></button>
-						</li>
-					)
-				})}
-			</ul>
-		</div>
 
+  
+
+
+	return (
+		<div className="container text-center">
+			
+			
+    			<h1 className="display-4 text-center mb-4">To do list</h1>
+    			<div className="p-2 mb-2 bg-light border-bottom">
+     				 <input type="text" className="form-control" onChange={handleChange} value={nuevoTodo} onKeyDown = {(e) => onkeydown(e)} />
+    			</div>
+    			<ul className="list-group list-group-flush">
+       			 {todos.map((todo, indice) => {
+            		return(
+               		 <li className="list-group-item">
+                    {todo} <button onClick={() => deleteTodo(indice)} type="button" className="btn-close " aria-label="Close"></button>
+                	</li>
+            		)
+       			 })}
+    			</ul>
+				<small className="text-muted">{todos.length} item left</small>
+			</div>
+		
 	);
 };
 
